@@ -16,7 +16,7 @@ type S3Service struct {
 	client *s3.S3
 }
 
-func NewS3Service(region, bucket string, accessKey *string, secretKey *string) *S3Service {
+func NewS3Service(region, bucket string, accessKey *string, secretKey *string) (*S3Service, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(region),
 		Credentials: credentials.NewStaticCredentials(
@@ -28,7 +28,7 @@ func NewS3Service(region, bucket string, accessKey *string, secretKey *string) *
 
 	if err != nil {
 		fmt.Println("Error creating session:", err)
-		return nil
+		return nil, err
 	}
 
 	svc := s3.New(sess)
@@ -37,7 +37,7 @@ func NewS3Service(region, bucket string, accessKey *string, secretKey *string) *
 		Region: region,
 		Bucket: bucket,
 		client: svc,
-	}
+	}, nil
 }
 
 func (s *S3Service) Upload(fileName string, file *[]byte) error {
