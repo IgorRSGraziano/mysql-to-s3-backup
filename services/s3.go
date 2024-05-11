@@ -16,7 +16,7 @@ type S3Service struct {
 	client *s3.S3
 }
 
-func NewS3Service(region, bucket string, accessKey *string, secretKey *string) (*S3Service, error) {
+func NewS3Service(region, bucket string, accessKey, secretKey *string) (*S3Service, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(region),
 		Credentials: credentials.NewStaticCredentials(
