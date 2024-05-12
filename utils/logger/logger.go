@@ -2,8 +2,9 @@ package logger
 
 import (
 	"fmt"
-	"mysql-gdrive-backup/services"
 	"time"
+
+	"github.com/IgorRSGraziano/mysql-to-s3-backup/services"
 )
 
 const (

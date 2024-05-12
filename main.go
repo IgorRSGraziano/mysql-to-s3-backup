@@ -2,10 +2,11 @@ package main
 
 import (
 	"bytes"
-	"mysql-gdrive-backup/services"
-	"mysql-gdrive-backup/utils/compress"
-	"mysql-gdrive-backup/utils/logger"
 	"os"
+
+	"github.com/IgorRSGraziano/mysql-to-s3-backup/services"
+	"github.com/IgorRSGraziano/mysql-to-s3-backup/utils/compress"
+	"github.com/IgorRSGraziano/mysql-to-s3-backup/utils/logger"
 
 	"github.com/joho/godotenv"
 )
