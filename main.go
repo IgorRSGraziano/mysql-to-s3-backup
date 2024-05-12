@@ -47,7 +47,7 @@ func main() {
 	bufBytes := buf.Bytes()
 
 	logger.Info("Uploading file to S3")
-	err = s3Service.Upload(*dumpService.FileName+"tar.gz", &bufBytes)
+	err = s3Service.Upload(*dumpService.FileName+".tar.gz", &bufBytes)
 
 	if err != nil {
 		logger.Fatal("Error uploading file to S3:" + err.Error())
