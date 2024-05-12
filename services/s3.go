@@ -46,5 +46,7 @@ func (s *S3Service) Upload(fileName string, file *[]byte) error {
 		Key:    aws.String(fileName),
 		Body:   bytes.NewReader(*file),
 	})
+
 	return err
+
 }

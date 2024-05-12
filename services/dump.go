@@ -25,7 +25,7 @@ func (d *Dump) GetFullFilePath() string {
 	return fmt.Sprintf("%s/%s", d.FilePath, *d.FileName)
 }
 
-func (d *Dump) Generate() error {
+func (d *Dump) GenerateDumpFile() error {
 	preparedCmd, args := prepareCommand(d.GenerateCmd)
 	out, err := exec.Command(preparedCmd, args...).CombinedOutput()
 	if err != nil {
@@ -35,6 +35,10 @@ func (d *Dump) Generate() error {
 	d.FileName = &fileName
 	err = os.WriteFile(d.GetFullFilePath(), out, 0644)
 	return err
+}
+
+func (d *Dump) DeleteDumpFile() error {
+	return os.Remove(d.GetFullFilePath())
 }
 
 func prepareCommand(cmd string) (exec string, args []string) {
