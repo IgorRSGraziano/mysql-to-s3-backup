@@ -1,12 +1,11 @@
 package services
 
 import (
-	"os"
 	"testing"
 )
 
 func Test_GenerateDump(t *testing.T) {
-	dump := NewDump("echo test", os.TempDir())
+	dump := NewDump("echo test")
 
 	err := dump.GenerateDumpFile()
 

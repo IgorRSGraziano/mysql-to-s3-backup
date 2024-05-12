@@ -14,10 +14,16 @@ type Dump struct {
 	FileName    *string
 }
 
-func NewDump(generateCmd, filePath string) *Dump {
+func NewDump(generateCmd string) *Dump {
+	tmpDir := os.TempDir()
+	backupDir := fmt.Sprintf("%s/sqls3bkp", tmpDir)
+	if _, err := os.Stat(backupDir); os.IsNotExist(err) {
+		os.Mkdir(backupDir, 0755)
+	}
+
 	return &Dump{
 		GenerateCmd: generateCmd,
-		FilePath:    filePath,
+		FilePath:    backupDir,
 	}
 }
 

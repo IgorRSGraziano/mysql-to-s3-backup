@@ -2,29 +2,40 @@ package services
 
 import (
 	"fmt"
-	"os"
-	"strconv"
 	"time"
 
+	"github.com/IgorRSGraziano/mysql-to-s3-backup/models"
 	"gopkg.in/gomail.v2"
 )
 
 func SendWarnEmail(title, body string) error {
-	smtpUser := os.Getenv("SMTP_USER")
-	smtpPass := os.Getenv("SMTP_PASSWORD")
-	smtpHost := os.Getenv("SMTP_HOST")
-	smtpPort, err := strconv.Atoi(os.Getenv("SMTP_PORT"))
+	config := models.LoadConfig()
 
-	if err != nil {
-		fmt.Println("Error parsing SMTP_PORT:", err)
-		smtpPort = 587
+	switch {
+	case config.SMTP.User == "":
+		return fmt.Errorf("SMTP user not set")
+	case config.SMTP.Password == "":
+		return fmt.Errorf("SMTP password not set")
+	case config.SMTP.Host == "":
+		return fmt.Errorf("SMTP host not set")
+	case config.SMTP.Port == 0:
+		return fmt.Errorf("SMTP port not set")
+	case config.SMTP.NotificationEmail == "":
+		return fmt.Errorf("SMTP notification email not set")
 	}
 
-	smtpSecure := os.Getenv("SMTP_SECURE") == "true"
+	smtpUser := config.SMTP.User
+	smtpPass := config.SMTP.Password
+	smtpHost := config.SMTP.Host
+	smtpPort := config.SMTP.Port
 
-	warnEmail := os.Getenv("WARN_EMAIL")
+	smtpSecure := config.SMTP.Secure
+
+	warnEmail := config.SMTP.NotificationEmail
 
 	errChan := make(chan error, 1)
+
+	var err error
 
 	go func() {
 		d := gomail.NewDialer(smtpHost, smtpPort, smtpUser, smtpPass)

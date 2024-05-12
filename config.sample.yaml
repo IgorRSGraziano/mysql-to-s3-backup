@@ -1,0 +1,16 @@
+s3: 
+  bucket: "my-bucket"
+  region: "us-west-2"
+  secret_key: "my-secret"
+  access_key: "my-access"
+
+dump: 
+  command: mysqldump -u root -pPassword licenses_prod
+
+smtp: 
+  host: "smtp.gmail.com"
+  port: 587
+  user: "example@gmail.com"
+  password: "password"
+  secure: true
+  notification_email: "email_to_receive@example.com"

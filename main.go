@@ -2,33 +2,17 @@ package main
 
 import (
 	"bytes"
-	"os"
 
+	"github.com/IgorRSGraziano/mysql-to-s3-backup/models"
 	"github.com/IgorRSGraziano/mysql-to-s3-backup/services"
 	"github.com/IgorRSGraziano/mysql-to-s3-backup/utils/compress"
 	"github.com/IgorRSGraziano/mysql-to-s3-backup/utils/logger"
-
-	"github.com/joho/godotenv"
 )
 
-func Setup() {
-	err := godotenv.Load()
-	if err != nil {
-		logger.Fatal("Error loading .env file")
-	}
-}
-
 func main() {
-	Setup()
+	config := models.LoadConfig()
 
-	dumpCommand := os.Getenv("DUMP_COMMAND")
-	dumpPath := os.Getenv("DUMP_PATH")
-	s3Region := os.Getenv("S3_REGION")
-	s3Bucket := os.Getenv("S3_BUCKET")
-	s3AccessKey := os.Getenv("S3_ACCESS_KEY")
-	s3SecretKey := os.Getenv("S3_SECRET_KEY")
-
-	dumpService := services.NewDump(dumpCommand, dumpPath)
+	dumpService := services.NewDump(config.Dump.Command)
 
 	logger.Info("Generating dump file")
 	err := dumpService.GenerateDumpFile()
@@ -54,7 +38,7 @@ func main() {
 	}
 
 	logger.Info("Creating S3 service")
-	s3Service, err := services.NewS3Service(s3Region, s3Bucket, &s3AccessKey, &s3SecretKey)
+	s3Service, err := services.NewS3Service(config.S3.Region, config.S3.Bucket, &config.S3.AccessKey, &config.S3.SecretKey)
 
 	if err != nil {
 		logger.Fatal("Error creating S3 service:" + err.Error())
