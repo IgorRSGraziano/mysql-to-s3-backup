@@ -1,6 +1,6 @@
 module github.com/IgorRSGraziano/mysql-to-s3-backup
 
-go 1.22.2
+go 1.14
 
 require (
 	github.com/aws/aws-sdk-go v1.51.29
@@ -9,8 +9,7 @@ require (
 )
 
 require (
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1
 )
