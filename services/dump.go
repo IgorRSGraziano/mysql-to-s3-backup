@@ -37,7 +37,8 @@ func (d *Dump) GenerateDumpFile() error {
 	if err != nil {
 		return err
 	}
-	fileName := fmt.Sprintf("%s_backup.sql", time.Now().Format("2006010215"))
+
+	fileName := fmt.Sprintf("%s_backup.sql", time.Now().Format("20060102_1504"))
 	d.FileName = &fileName
 	err = os.WriteFile(d.GetFullFilePath(), out, 0644)
 	return err
